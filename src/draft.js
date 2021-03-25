@@ -1,35 +1,35 @@
-function repeater(str, {
-    repeatTimes = 1,
-    separator = '+',
-    addition = '',
-    additionRepeatTimes = 1,
-    additionSeparator = '|'
-}) {
-    let _str = String(str);
-    console.log(_str, 'LKJL:KJ:LKJ:LKJ:LKJ')
-    let _addition = String(addition);
-    let result = '';
-    for (let i = 0; i < repeatTimes; i++) {
-        result += _str;
-        for (let j = 0; j < additionRepeatTimes; j++) {
-            if (j + 1 === additionRepeatTimes) {
-                result += _addition;
-            } else {
-                result += _addition + additionSeparator;
-            }
-        }
-        if (i + 1 === repeatTimes) {
-
-        } else {
-            result += separator;
-        }
+class VigenereCipheringMachine {
+    constructor(){
+        this.abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";        
     }
-    return result;
-};
-console.log(
-    repeater('TESTstr', {
-        separator: 'ds',
-        addition: 'ADD!',
-        additionSeparator: ')))000'
-    })
-)
+    encrypt(message, key) {        
+        let wordLength = Math.max(message.length, key.length);
+        let result = '';
+        for(let i = 0; i < wordLength; i++){
+            let messageIndex = this.abc.indexOf(message[((i >= message.length) ? i % message.length : i )]);
+            let calcKeyIndex = key[((i >= key.length) ? i % key.length : i)];
+            let keyIndex = this.abc.indexOf(calcKeyIndex);
+            let char = this.abc[ ( ( ( this.abc.length + ( messageIndex + keyIndex ) ) % this.abc.length ) ) ];	
+            result += char;
+            console.log(result)
+        }
+        return result;            
+    }    
+    decrypt(message, key) {
+        let wordLength = Math.max(message.length, key.length);
+        let result = '';
+        for(let i = 0; i < wordLength; i++){            
+            let messageIndex = this.abc.indexOf(message[((i >= message.length) ? i % message.length : i )]);
+            let calcKeyIndex = key[((i >= key.length) ? i % key.length : i)];
+            let keyIndex = this.abc.indexOf(calcKeyIndex);            
+            let char = this.abc[ ( ( ( this.abc.length + ( messageIndex - keyIndex ) ) % this.abc.length ) ) ];            	
+            result += char;            
+        }
+        console.log(result)        
+        return result;       
+    }
+  }
+
+  let test = new VigenereCipheringMachine();
+  test.encrypt("ATTACKATDAWN", 'LEMON')
+  test.decrypt("LXFOPVEFRNHR", 'LEMON')
