@@ -1,28 +1,28 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function repeater(str, {
-  repeatTimes = 0,
+  repeatTimes = 1,
   separator = '+',
   addition = '',
-  additionRepeatTimes = 0,
+  additionRepeatTimes = 1,
   additionSeparator = '|'
 }) {
-  let _str = String(str);
+  let _str = String(str);  
   let _addition = String(addition);
   let result = '';
   for (let i = 0; i < repeatTimes; i++) {
-    restult = result + _str;
+    result += _str;
     for (let j = 0; j < additionRepeatTimes; j++) {
       if (j + 1 === additionRepeatTimes) {
-        result = result + _addition;
+        result += _addition;
       } else {
-        result = result + _addition + additionSeparator;
+        result += _addition + additionSeparator;
       }
     }
-    if (i + 1 === additionRepeatTimes) {
+    if (i + 1 === repeatTimes) {
 
     } else {
-      result = result + separator;
+      result += separator;
     }
   }
   return result;
